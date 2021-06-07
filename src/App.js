@@ -1,15 +1,19 @@
 import React, {useEffect} from "react";
+
 console.log(fetch)
 
 function App() {
-useEffect(_ => {
-
-})
+  fetch("http://api.github.com/users/ivan-kleshnin")
+      .then(resp => {
+            resp.json()
+      .then(data => console.log(data))
+          }
+      )
 
 
   return <div>
 
-    </div>
+  </div>
 }
 
 export default App;
