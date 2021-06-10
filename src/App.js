@@ -26,4 +26,8 @@ function App() {
   </div>
 }
 
+function Loading() {
+  return <span>Loading...</span>
+}
+
 export default App;
