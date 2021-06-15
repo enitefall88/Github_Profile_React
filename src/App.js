@@ -6,6 +6,7 @@ let apiClient = makeApiClient("https://api.github.com")
 export default function App() {
   let [user, setUser] = useState(null)
   let [loading, setLoading] = useState(true)
+  let [error, setError] = useState(null)
   useEffect(_ => {
     apiClient.fetchJSON("/users/ivan-kleshnin")
       .then(user => {
@@ -13,6 +14,11 @@ export default function App() {
         setLoading(false)
       })
   }, [])
+
+  if (error) {
+    return <Error/>
+  }
+
   if (loading) {
     return <Loading/>
   }
@@ -30,6 +36,12 @@ export default function App() {
     </code></pre>
   </div>
 }
+
+
 function Loading() {
   return <span>Loading...</span>
+}
+
+function Error({error}) {
+  return <span>{error.toString()}</span>
 }
