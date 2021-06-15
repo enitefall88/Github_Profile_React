@@ -13,10 +13,13 @@ export default function App() {
         setUser(user)
         setLoading(false)
       })
+        .catch(error => {
+          setError(error)
+        })
   }, [])
 
   if (error) {
-    return <Error/>
+    return <Error error={error}/>
   }
 
   if (loading) {
@@ -43,5 +46,5 @@ function Loading() {
 }
 
 function Error({error}) {
-  return <span>{error.toString()}</span>
+  return <span>{String(error)}</span>
 }

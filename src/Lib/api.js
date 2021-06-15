@@ -5,6 +5,8 @@ export function makeApiClient(apiOrigin) {
     if (!url.startsWith("http")) {
       url = apiOrigin + url
     }
+
+    throw new Error('Fake error here')
     options = R.mergeDeepRight(options, {
       headers: {
         "Accept": "application/json",
