@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 
-console.log(fetch)
+
 
 function App() {
   fetch("http://api.github.com/users/ivan-kleshnin")
