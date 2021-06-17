@@ -3,8 +3,9 @@ import React, {useState, useEffect} from "react"
 import {makeApiClient} from "./Lib/api"
 let apiClient = makeApiClient("https://api.github.com")
 // 5.6, 5.7, 5.8
-export default function App() {
-  let [user, setUser] = useState(null)
+
+function useFetch(apiClient, url) {
+  let [data, setData] = useState(null)
   let [loading1, setLoading1] = useState(true)
   let [loading2, setLoading2] = useState(true)
   let [error, setError] = useState(null)
@@ -12,9 +13,9 @@ export default function App() {
 
   //useEffect1 - loading1
   useEffect(_ => {
-    apiClient.fetchJSON("/users/enitefall88")
-      .then(user => {
-        setUser(user)
+    apiClient.fetchJSON(url)
+      .then(data => {
+        setData(data)
         setLoading1(false)
       })
 
@@ -29,6 +30,12 @@ export default function App() {
       })
 
   }, [])
+  return {data, loading1, loading2, error, repos}
+}
+
+export default function App() {
+  let {data, loading1, loading2, error, repos} = useFetch(apiClient, "/users/enitefall88")
+
 
   if (error) {
     return <Error error={error}/>
@@ -39,12 +46,12 @@ export default function App() {
   }
   return <div className="p-3">
     <h1 className="h3">GitHub Profile</h1>
-    <img width="150px" src={user.avatar_url}/>
+    <img width="150px" src={data.avatar_url}/>
     <h2 className="h4">
-      {user.name}
+      {data.name}
     </h2>
     <p>
-      {user.bio}
+      {data.bio}
     </p>
     {repos.map(repo => {
       return <ul key={repo.id}>
@@ -54,7 +61,7 @@ export default function App() {
         </ul>
         })}
     <pre className="p-3" style={{background: "gray", color: "white"}}><code>
-      {JSON.stringify(user, null, 2)}
+      {JSON.stringify(data, null, 2)}
     </code></pre>
   </div>
 }
